@@ -195,7 +195,6 @@ describe('PubSub', () => {
       'grpc.max_receive_message_length': 20000001,
       libName: 'gccl',
       libVersion: PKG.version,
-      scopes: [],
     };
 
     it('should extend the correct methods', () => {
@@ -214,19 +213,6 @@ describe('PubSub', () => {
 
     it('should return an instance', () => {
       assert(new PubSub() instanceof PubSub);
-    });
-
-    it('should combine all required scopes', () => {
-      v1ClientOverrides.SubscriberClient = {};
-      v1ClientOverrides.SubscriberClient.scopes = ['a', 'b', 'c'];
-
-      v1ClientOverrides.PublisherClient = {};
-      v1ClientOverrides.PublisherClient.scopes = ['b', 'c', 'd', 'e'];
-
-      const pubsub = new PubSub({});
-      const options = {scopes: ['a', 'b', 'c', 'd', 'e']};
-      const expectedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
-      assert.deepStrictEqual(pubsub.options, expectedOptions);
     });
 
     it('should attempt to determine the service path and port', () => {

@@ -252,15 +252,6 @@ export class PubSub {
 
   constructor(options?: ClientConfig) {
     options = options || {};
-    // Determine what scopes are needed.
-    // It is the union of the scopes on both clients.
-    const clientClasses = [v1.SubscriberClient, v1.PublisherClient];
-    const allScopes: {[key: string]: boolean} = {};
-    for (const clientClass of clientClasses) {
-      for (const scope of clientClass.scopes) {
-        allScopes[scope] = true;
-      }
-    }
     this.options = Object.assign(
       {
         grpc,
@@ -269,7 +260,6 @@ export class PubSub {
         'grpc.max_receive_message_length': 20000001,
         libName: 'gccl',
         libVersion: PKG.version,
-        scopes: Object.keys(allScopes),
       },
       options
     );
